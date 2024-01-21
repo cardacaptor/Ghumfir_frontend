@@ -11,7 +11,7 @@ import 'api.dart';
 
 void main() {
   Api.loadToken();
-  runApp(WrapWithProvider());
+  runApp(const WrapWithProvider());
 }
 
 class WrapWithProvider extends StatelessWidget {

@@ -9,7 +9,6 @@ class Recommenadation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Api.token = null;
     return Column(
       children: [
         SizedBox(

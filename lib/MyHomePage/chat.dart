@@ -32,7 +32,6 @@ class _ChatScreenState extends State<ChatScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   if (!snapshot.error.toString().contains("401")) {
-                    print(snapshot.stackTrace);
                     return Center(child: Text(snapshot.error.toString()));
                   }
                   return const Center(
@@ -40,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   );
                 }
                 if (!snapshot.hasData || snapshot.data == null) {
-                  return const CircularProgressIndicator();
+                  return const Center(child: CircularProgressIndicator());
                 }
                 _messages = snapshot.data!;
                 return ListView.builder(
@@ -70,6 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: TextField(
               controller: _messageController,
+              onSubmitted: (_) => _sendMessage(context),
               decoration: const InputDecoration(
                 hintText: 'Type a message...',
               ),

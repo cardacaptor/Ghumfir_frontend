@@ -12,31 +12,24 @@ class AuthService {
     String password,
     BuildContext context,
   ) async {
-    try {
-      final String apiUrl = "${Api.baseUrl}auth/signin";
-      final response = await post(
-        Uri.parse(apiUrl),
-        body: jsonEncode({
-          'username': username,
-          'password': password,
-        }),
-        headers: {'Content-Type': 'application/json'},
-      );
-      if (response.statusCode == 201) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        final String token = responseData['data']['token'];
+    final String apiUrl = "${Api.baseUrl}auth/signin";
+    final response = await post(
+      Uri.parse(apiUrl),
+      body: jsonEncode({
+        'username': username,
+        'password': password,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final String token = responseData['data']['token'];
 
-        print('SignIn Successful');
-        print('Token: $token');
-        return token;
-      } else {
-        print('SignIn Failed');
-        print(response.statusCode);
-        print(response.body);
-        return null;
-      }
-    } catch (e) {
-      print('Error: $e');
+      print('SignIn Successful');
+      print('Token: $token');
+      return token;
+    } else {
+      response.handleErrors(context);
       return null;
     }
   }
@@ -67,6 +60,7 @@ class AuthService {
         return null;
       }
     } else {
+      response.handleErrors(context);
       print("Sign-up failed: ${response.reasonPhrase}");
       return null;
     }

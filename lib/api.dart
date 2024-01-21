@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
+import 'Components/DialogPrompt.dart';
 
 class Api {
   static Future<SharedPreferences> prefs = SharedPreferences.getInstance();
@@ -29,4 +33,11 @@ class Api {
 
   static Future<void> setToken(String value) async =>
       (await prefs).setString("token", value);
+}
+
+extension Handle on Response {
+  handleErrors(BuildContext context) {
+    Map<String, dynamic> body = jsonDecode(this.body);
+    DialogPrompt.showSnackbar(body["errors"].toString(), context);
+  }
 }
