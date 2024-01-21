@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/RecommendationCard.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../api.dart';
+
 class Recommenadation extends StatelessWidget {
   const Recommenadation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Api.token = null;
     return Column(
       children: [
         SizedBox(
@@ -41,10 +44,9 @@ class Recommenadation extends StatelessWidget {
           height: 20,
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 70),
-          margin: const EdgeInsets.symmetric(vertical: 20),
           height: 500,
           child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 70, vertical: 20),
             scrollDirection: Axis.horizontal,
             children: [
               ["", 1],

@@ -9,18 +9,16 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        children: [
-          Column(
-            children: [
-              ContactBar(),
-              SearchPart(),
-              Recommenadation(),
-            ],
-          ),
-        ],
-      ),
+    return ListView(
+      children: [
+        Column(
+          children: [
+            ContactBar(),
+            SearchPart(),
+            Recommenadation(),
+          ],
+        ),
+      ],
     );
   }
 }
