@@ -29,7 +29,10 @@ class ChatService {
     Response res = await post(
       Uri.parse("${Api.baseUrl}bot/"),
       body: jsonEncode({"message": textMessage.trim()}),
-      headers: Api.header,
+      headers:{
+        "content-type": "application/json",
+        if (Api.token != null) "Authorization": "Token ${Api.token}",
+      },
     );
     if (res.statusCode == 200) {
       Map<String, dynamic> body = jsonDecode(res.body);
