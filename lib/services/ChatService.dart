@@ -29,7 +29,7 @@ class ChatService {
       body: jsonEncode({"message": textMessage.trim()}),
       headers: Api.header,
     );
-    if (res.statusCode == 200) {
+    if (res.statusCode == 200 || res.statusCode == 201) {
       Map<String, dynamic> body = jsonDecode(res.body);
       return (ChatModel.fromJson(body["data"]["reply"]), true);
     } else if (res.statusCode == 401) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:ghumfir_f/Models/chat_model.dart';
+import 'package:ghumfir_f/api.dart';
 import 'package:ghumfir_f/services/ChatService.dart';
 
 import 'SignInScreen.dart';
@@ -153,16 +154,117 @@ class MessageWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: !message.isFromBot ? Colors.blue : Colors.grey,
+          color: !message.isFromBot ? Color(0xffFFE77A) : Colors.black12,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
           children: [
             Text(
               message.message,
-              style: const TextStyle(color: Colors.white),
+              // style: const TextStyle(color: Colors.white),
             ),
-            ...message.posts.map((e) => Text(e.post.caption))
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: message.posts
+                    .map(
+                      (e) => Builder(builder: (ctx) {
+                        return Container(
+                          width: 300,
+                          clipBehavior: Clip.hardEdge,
+                          margin: EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: EdgeInsets.only(bottom: 12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.0),
+                            color: Theme.of(context).cardColor,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.network(
+                                ("${Api.baseUrl}${e.post.url}").replaceFirst(
+                                    RegExp(r'(?<=:\/\/[^\/]+)\/{2}'), '/'),
+                                height: 200,
+                                width: MediaQuery.of(ctx).size.width,
+                                fit: BoxFit.cover,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.thumb_up_sharp,
+                                          color: Colors.green,
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          '${e.post.numberOfLikes}',
+                                          style: TextStyle(
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Icon(
+                                          Icons.thumb_down_sharp,
+                                          color: Colors.red,
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          '${e.post.numberOfDislikes}',
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      e.post.caption,
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(vertical: 8),
+                                      height: 1,
+                                      width: MediaQuery.of(ctx).size.width,
+                                      color: Colors.lightGreen.withOpacity(0.5),
+                                    ),
+                                    Text(
+                                      "NPR ${e.post.price}",
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    )
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ),

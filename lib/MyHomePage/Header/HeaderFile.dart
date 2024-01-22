@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ghumfir_f/Models/user_model.dart';
 
 class HeaderFile extends StatelessWidget {
   final Color secondaryYellow = Color(0xffFFE77A);
+  final List<UserModel> users = [];
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class HeaderFile extends StatelessWidget {
                 Expanded(child: Container()),
                 Center(
                   child: Row(
-                    children: const [
+                    children: [
                       SizedBox(
                         width: 40,
                       ),
@@ -85,8 +87,8 @@ class HeaderFile extends StatelessWidget {
                 ),
                 Expanded(child: Container()),
                 InkWell(
-                  onTap: (){
-                     _dialogBuilder(context);
+                  onTap: () {
+                    _dialogBuilder(context);
                   },
                   child: Stack(
                     children: [
@@ -124,9 +126,9 @@ class HeaderFile extends StatelessWidget {
           title: const Text('Basic dialog title'),
           content: const Text(
             'A dialog is a type of modal window that\n'
-                'appears in front of app content to\n'
-                'provide critical information, or prompt\n'
-                'for a decision to be made.',
+            'appears in front of app content to\n'
+            'provide critical information, or prompt\n'
+            'for a decision to be made.',
           ),
           actions: <Widget>[
             TextButton(

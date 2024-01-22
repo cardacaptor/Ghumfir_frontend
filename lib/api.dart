@@ -31,13 +31,24 @@ class Api {
     return _token;
   }
 
-  static Future<void> setToken(String value) async =>
-      (await prefs).setString("token", value);
+  static Future<void> setToken(String? value) async {
+    if (value == null) {
+      (await prefs).remove("token");
+      return;
+    }
+    (await prefs).setString("token", value);
+  }
 }
 
 extension Handle on Response {
   handleErrors(BuildContext context) {
     Map<String, dynamic> body = jsonDecode(this.body);
-    DialogPrompt.showSnackbar(body["errors"].toString(), context);
+    if (body["errors"] != null) {
+      DialogPrompt.showSnackbar(body["errors"].toString(), context);
+    } else if (body["data"] != null) {
+      DialogPrompt.showSnackbar(body["data"].toString(), context);
+    } else {
+      throw body.toString();
+    }
   }
 }

@@ -21,9 +21,9 @@ class WrapWithProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-          ChangeNotifierProvider(create: (_) => SignInManagement()),
-          ChangeNotifierProvider(create: (_) => SignUpManagement()),
-        ],
+        ChangeNotifierProvider(create: (_) => SignInManagement()),
+        ChangeNotifierProvider(create: (_) => SignUpManagement()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Ghumfir',
@@ -31,8 +31,8 @@ class WrapWithProvider extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Builder(builder: (context) {
-            return const MyApp();
-          }),
+          return const MyApp();
+        }),
       ),
     );
   }
@@ -97,10 +97,11 @@ class _MyAppState extends State<MyApp> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
-                    margin: EdgeInsets.only(right: 0),
+                    margin: const EdgeInsets.all(0),
                     width: 50,
                     height: 114,
-                    child: ElevatedButton(
+                    child: IconButton(
+                      icon: Icon(Icons.message),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xffFFE77A),
                       ),
@@ -109,7 +110,6 @@ class _MyAppState extends State<MyApp> {
                           isOpen = !isOpen;
                         });
                       },
-                      child: Icon(Icons.message),
                     ),
                   ),
                 ),
