@@ -7,9 +7,7 @@ import '../../api.dart';
 class RecommendationCard extends StatelessWidget {
   final PostModel item;
 
-  RecommendationCard(
-    this.item,
-  );
+  RecommendationCard(this.item,);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +15,8 @@ class RecommendationCard extends StatelessWidget {
       children: [
         Container(
           clipBehavior: Clip.hardEdge,
+          width: 400,
+          height: 436,
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -32,80 +32,67 @@ class RecommendationCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Builder(builder: (ctx) {
-                return Container(
-                  height: 500,
-                  child: Hero(
-                    tag: "card-to-description${item.id}",
-                    child: Image.network(
-                      "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${item.url}",
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
-                      height: MediaQuery.of(context).size.height,
-                    ),
-                  ),
-                );
-              }),
+              Hero(
+                tag: "card-to-description${item.id}",
+                child: Image.network(
+                  "${Api.baseUrl.substring(0,Api.baseUrl.length-1)}${item.url}",
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                  height: 300,
+                ),
+              ),
               const SizedBox(
                 height: 22,
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.caption,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 1.3),
-                        ),
-                        SizedBox(
-                          height: 12,
-                        ),
-                        if (item.price != null)
-                          Text(
-                            "NPR ${item.price}",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Color(0xff0394B6),
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 1.3,
-                            ),
-                          ),
-                      ],
-                    ),
-                    Expanded(child: Container()),
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.thumb_up_sharp,
-                        color: Colors.green,
-                        size: 30,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 40,
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.thumb_down_sharp,
-                        color: Colors.red,
-                        size: 30,
-                      ),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "Kathmandu World Heritage Sites Tour",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.3),
                 ),
               ),
+              const SizedBox(
+                height: 12,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return DescriptionDetail(item.id);
+                  }));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: const [
+                      Text(
+                        "View Details",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff0394B6),
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.3,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Icon(
+                        Icons.arrow_circle_right_outlined,
+                        color: Color(0xff0394B6),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
         Positioned(
-          bottom: item.price != null ? 80 : 54,
+          bottom: 100,
           left: 0,
           right: 0,
           child: Container(

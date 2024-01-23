@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:ghumfir_f/Models/chat_model.dart';
 import 'package:ghumfir_f/api.dart';
 import 'package:ghumfir_f/services/ChatService.dart';
@@ -27,6 +26,17 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 10,
+        ),
+        Image.asset(
+          "assets/images/Logo.png",
+          width: 230,
+          height: 59,
+        ),
+        SizedBox(
+          height: 10,
+        ),
         Expanded(
           child: FutureBuilder(
               future: future,
@@ -158,6 +168,7 @@ class MessageWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               message.message,
@@ -240,20 +251,30 @@ class MessageWidget extends StatelessWidget {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(vertical: 8),
-                                      height: 1,
-                                      width: MediaQuery.of(ctx).size.width,
-                                      color: Colors.lightGreen.withOpacity(0.5),
-                                    ),
-                                    Text(
-                                      "NPR ${e.post.price}",
-                                      style: TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
+                                    if (e.post.price != null)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 8),
+                                            height: 1,
+                                            width:
+                                                MediaQuery.of(ctx).size.width,
+                                            color: Colors.lightGreen
+                                                .withOpacity(0.5),
+                                          ),
+                                          Text(
+                                            "NPR ${e.post.price}",
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),

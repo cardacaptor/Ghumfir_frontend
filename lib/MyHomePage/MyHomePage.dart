@@ -1,21 +1,34 @@
-
 import 'package:flutter/material.dart';
-import 'package:ghumfir_f/MyHomePage/Header/ContactBar.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/Recommenadation.dart';
 import 'package:ghumfir_f/MyHomePage/SearchBar/SearchPart.dart';
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final bool isOpen;
+  MyHomePage(this.isOpen);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Stack(
       children: [
-        Column(
+        Image.asset(
+          'assets/images/image_1.png',
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+        Positioned.fill(
+          child: Container(
+            color: Color(0x99ffffff), // Adjust color and opacity as needed
+          ),
+        ),
+        ListView(
           children: [
-            ContactBar(),
-            SearchPart(),
-            Recommenadation(),
+            Column(
+              children: [
+                SearchPart(isOpen),
+                Recommenadation(),
+              ],
+            ),
           ],
         ),
       ],

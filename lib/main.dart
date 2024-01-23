@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:ghumfir_f/Management/SignInManagement.dart';
 import 'package:ghumfir_f/Management/SignUpManagement.dart';
@@ -58,7 +56,7 @@ class _MyAppState extends State<MyApp> {
           ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: MyHomePage()),
+                Expanded(child: MyHomePage(isOpen)),
                 MouseRegion(
                   cursor: SystemMouseCursors.resizeColumn,
                   child: GestureDetector(
@@ -93,7 +91,7 @@ class _MyAppState extends State<MyApp> {
             )
           : Stack(
               children: [
-                MyHomePage(),
+                MyHomePage(isOpen),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(

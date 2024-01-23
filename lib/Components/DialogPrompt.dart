@@ -1,9 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:hovering/hovering.dart';
-import 'package:provider/provider.dart';
-
-import 'TextField.dart';
 
 class DialogPrompt {
   static showSnackbar(String text, BuildContext context) {

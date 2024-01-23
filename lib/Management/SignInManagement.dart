@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ghumfir_f/Components/DialogPrompt.dart';
 
 import '../api.dart';
 import '../services/AuthService.dart';

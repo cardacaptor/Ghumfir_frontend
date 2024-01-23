@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
                       children: [
                         Text(
                           "Register Now",
-                          style: Theme.of(context).textTheme.headline3,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                         SizedBox(
                           height: 20,

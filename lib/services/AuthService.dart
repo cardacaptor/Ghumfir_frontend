@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:ghumfir_f/api.dart';
 import 'package:http/http.dart';
 
-import '../Components/DialogPrompt.dart';
-
 class AuthService {
   Future<String?> signIn(
     String username,

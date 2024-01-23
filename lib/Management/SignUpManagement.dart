@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ghumfir_f/Components/DialogPrompt.dart';
-import 'package:provider/provider.dart';
 
 import '../api.dart';
 import '../services/AuthService.dart';

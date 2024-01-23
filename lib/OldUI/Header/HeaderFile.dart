@@ -1,14 +1,10 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir_f/Models/user_model.dart';
 
-import '../../Models/user_model.dart';
-
-class SearchPart extends StatelessWidget {
+class HeaderFile extends StatelessWidget {
   final Color secondaryYellow = Color(0xffFFE77A);
   final List<UserModel> users = [];
-  final bool isOpen;
-
-  SearchPart(this.isOpen);
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +15,20 @@ class SearchPart extends StatelessWidget {
         right: 60,
         bottom: 20,
       ),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
+      decoration: const BoxDecoration(
+        color: Color(0x99ffffff),
       ),
       child: Row(
         children: [
-          isOpen
-              ? Container()
-              : Image.asset(
-                  "assets/images/Logo.png",
-                  width: 230,
-                  height: 59,
-                ),
-          isOpen ? Container() : Expanded(child: Container()),
+          Image.asset(
+            "assets/images/Logo.png",
+            width: 230,
+            height: 59,
+          ),
+          Expanded(child: Container()),
           Container(
             clipBehavior: Clip.hardEdge,
-            width: isOpen ? 900 : 844,
+            width: 844,
             height: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
