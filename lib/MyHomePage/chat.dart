@@ -17,7 +17,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController controller = ScrollController();
   List<ChatModel> _messages = [];
   int page = 1;
-  Future<List<ChatModel>> future = ChatService().getChats(1);
+  late Future<List<ChatModel>> future = ChatService().getChats(1, context);
 
   bool disable = false;
   bool limitReached = false;
@@ -119,7 +119,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           );
           setState(() {
-            future = ChatService().getChats(1);
+            future = ChatService().getChats(1, context);
           });
         }
       }
@@ -137,7 +137,7 @@ class _ChatScreenState extends State<ChatScreen> {
           !limitReached) {
         disable = true;
         page++;
-        final list = await ChatService().getChats(page);
+        final list = await ChatService().getChats(page, context);
         if (list.length < 20) {
           limitReached = true;
         }
@@ -204,45 +204,6 @@ class MessageWidget extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Icon(
-                                          Icons.thumb_up_sharp,
-                                          color: Colors.green,
-                                          size: 18,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          '${e.post.numberOfLikes}',
-                                          style: TextStyle(
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Icon(
-                                          Icons.thumb_down_sharp,
-                                          color: Colors.red,
-                                          size: 18,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          '${e.post.numberOfDislikes}',
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     Text(
                                       e.post.caption,
                                       style: TextStyle(

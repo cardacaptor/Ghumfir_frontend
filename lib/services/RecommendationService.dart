@@ -7,15 +7,18 @@ import 'package:http/http.dart';
 import '../api.dart';
 
 class RecommendationService {
-  Future<List<PostModel>?> fetchFeed(int page, BuildContext context) async {
+  Future<(List<PostModel>, int)?> fetchFeed(int page, BuildContext context,
+      {int sessionId = 0}) async {
     Response res = await get(
-      Uri.parse("${Api.baseUrl}feed/$page"),
+      Uri.parse("${Api.baseUrl}feed/landing/$page/session/$sessionId"),
       headers: Api.header,
     );
     if (res.statusCode == 200 || res.statusCode == 201) {
       Map<String, dynamic> response = jsonDecode(res.body);
       List<dynamic> data = response["data"];
-        return data.map((e) => PostModel.fromJson(e)).toList();
+      List<PostModel> posts = data.map((e) => PostModel.fromJson(e)).toList();
+      int sessionId = int.tryParse(response["session_id"].toString()) ?? 0;
+      return (posts, sessionId);
     }
     res.handleErrors(context);
     return null;

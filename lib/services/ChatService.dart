@@ -8,7 +8,7 @@ import '../Models/chat_model.dart';
 import '../api.dart';
 
 class ChatService {
-  Future<List<ChatModel>> getChats(int page) async {
+  Future<List<ChatModel>> getChats(int page, BuildContext context) async {
     Response res = await get(
       Uri.parse("${Api.baseUrl}bot/$page"),
       headers: Api.header,
@@ -18,6 +18,7 @@ class ChatService {
       List<dynamic> messages = body["data"]["messages"];
       return messages.map((e) => ChatModel.fromJson(e)).toList();
     } else {
+      res.handleErrors(context);
       throw "${res.statusCode}: ${res.body}";
     }
   }

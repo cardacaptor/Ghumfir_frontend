@@ -1,3 +1,4 @@
+import 'package:ghumfir_f/Models/post_action_model.dart';
 import 'package:ghumfir_f/Models/post_tags_model.dart';
 
 class PostModel {
@@ -10,6 +11,7 @@ class PostModel {
   final double? price;
   final int? duration;
   final List<PostTagsModel> postTags;
+  final List<PostActionModel> postActions;
 
   PostModel(
     this.id,
@@ -21,20 +23,25 @@ class PostModel {
     this.price,
     this.duration,
     this.postTags,
+    this.postActions,
   );
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-        json["id"],
-        json["url"],
-        json["caption"],
-        json["number_of_likes"],
-        json["number_of_dislikes"],
-        json["number_of_views"],
-        json["price"] == null? null: json["price"]+ 0.0,
-        json["duration"],
-        (json["post_tags"] as List<dynamic>)
-            .map((e) => PostTagsModel.fromJson(e))
-            .toList());
+      json["id"],
+      json["url"],
+      json["caption"],
+      json["number_of_likes"],
+      json["number_of_dislikes"],
+      json["number_of_views"],
+      json["price"] == null ? null : json["price"] + 0.0,
+      json["duration"],
+      (json["post_tags"] as List<dynamic>)
+          .map((e) => PostTagsModel.fromJson(e))
+          .toList(),
+      (json["actions"] as List<dynamic>)
+          .map((e) => PostActionModel.fromJson(e))
+          .toList(),
+    );
   }
 }

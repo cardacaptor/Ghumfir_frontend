@@ -12,8 +12,9 @@ class Recommenadation extends StatefulWidget {
 
 class _RecommenadationState extends State<Recommenadation> {
   int page = 1;
+  int sessionId = 0;
   List<PostModel>? posts;
-  late Future<List<PostModel>?> future =
+  late Future<(List<PostModel>, int)?> future =
       RecommendationService().fetchFeed(page, context);
   final ScrollController controller = ScrollController();
   bool disable = false;
@@ -29,8 +30,10 @@ class _RecommenadationState extends State<Recommenadation> {
           !limitReached) {
         disable = true;
         page++;
-        List<PostModel>? posts =
-            await RecommendationService().fetchFeed(page, context);
+        (List<PostModel>, int)? postSession = await RecommendationService()
+            .fetchFeed(page, context, sessionId: sessionId);
+        sessionId = postSession?.$2 ?? 0;
+        List<PostModel>? posts = postSession?.$1;
         if (posts != null) {
           if (posts.length < 3) {
             limitReached = true;
@@ -63,7 +66,8 @@ class _RecommenadationState extends State<Recommenadation> {
               if (!snapshot.hasData || snapshot.data == null) {
                 return const Center(child: CircularProgressIndicator());
               }
-              posts ??= snapshot.data;
+              posts ??= snapshot.data?.$1;
+              sessionId = snapshot.data?.$2 ?? 0;
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 controller: controller,
@@ -75,7 +79,12 @@ class _RecommenadationState extends State<Recommenadation> {
                     .map(
                       (e) => Column(
                         children: [
-                          RecommendationCard(e.value),
+                          RecommendationCard(
+                            e.value,
+                            (newPost) => setState(
+                              () => posts?[e.key] = newPost,
+                            ),
+                          ),
                           SizedBox(
                             height: 42,
                           ),

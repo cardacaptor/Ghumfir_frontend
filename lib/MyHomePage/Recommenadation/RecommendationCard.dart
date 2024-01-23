@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:ghumfir_f/Models/post_action_model.dart';
 import 'package:ghumfir_f/Models/post_model.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/DescriptionDetail.dart';
-
+import 'package:ghumfir_f/services/LikeDislikeService.dart';
+import 'package:collection/collection.dart';
 import '../../api.dart';
 
-class RecommendationCard extends StatelessWidget {
+class RecommendationCard extends StatefulWidget {
   final PostModel item;
+  final Function(PostModel post) onUpdate;
 
-  RecommendationCard(
-    this.item,
-  );
+  RecommendationCard(this.item, this.onUpdate);
+
+  @override
+  State<RecommendationCard> createState() => _RecommendationCardState();
+}
+
+class _RecommendationCardState extends State<RecommendationCard> {
+  bool disabled = false;
 
   @override
   Widget build(BuildContext context) {
+    PostAction? myAction =
+        widget.item.postActions.firstWhereOrNull((e) => e.user.id == 1)?.action;
     return Stack(
       children: [
         Container(
@@ -36,9 +46,9 @@ class RecommendationCard extends StatelessWidget {
                 return Container(
                   height: 500,
                   child: Hero(
-                    tag: "card-to-description${item.id}",
+                    tag: "card-to-description${widget.item.id}",
                     child: Image.network(
-                      "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${item.url}",
+                      "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${widget.item.url}",
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                       height: MediaQuery.of(context).size.height,
@@ -57,7 +67,7 @@ class RecommendationCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.caption,
+                          widget.item.caption,
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -66,9 +76,9 @@ class RecommendationCard extends StatelessWidget {
                         SizedBox(
                           height: 12,
                         ),
-                        if (item.price != null)
+                        if (widget.item.price != null)
                           Text(
-                            "NPR ${item.price}",
+                            "NPR ${widget.item.price}",
                             style: TextStyle(
                               fontSize: 18,
                               color: Color(0xff0394B6),
@@ -80,9 +90,18 @@ class RecommendationCard extends StatelessWidget {
                     ),
                     Expanded(child: Container()),
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        if (disabled) return;
+                        disabled = true;
+                        PostModel post = await LikeDislikeService()
+                            .likePost(widget.item.id, context);
+                        widget.onUpdate(post);
+                        disabled = false;
+                      },
                       child: Icon(
-                        Icons.thumb_up_sharp,
+                        myAction == PostAction.LK
+                            ? Icons.thumb_up_sharp
+                            : Icons.thumb_up_outlined,
                         color: Colors.green,
                         size: 30,
                       ),
@@ -91,9 +110,18 @@ class RecommendationCard extends StatelessWidget {
                       width: 40,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        if (disabled) return;
+                        disabled = true;
+                        PostModel post = await LikeDislikeService()
+                            .dislikePost(widget.item.id, context);
+                        widget.onUpdate(post);
+                        disabled = false;
+                      },
                       child: Icon(
-                        Icons.thumb_down_sharp,
+                        myAction == PostAction.DL
+                            ? Icons.thumb_down_sharp
+                            : Icons.thumb_down_outlined,
                         color: Colors.red,
                         size: 30,
                       ),
@@ -105,7 +133,7 @@ class RecommendationCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: item.price != null ? 80 : 54,
+          bottom: widget.item.price != null ? 80 : 54,
           left: 0,
           right: 0,
           child: Container(

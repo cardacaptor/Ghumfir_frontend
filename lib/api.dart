@@ -44,10 +44,13 @@ extension Handle on Response {
   handleErrors(BuildContext context) {
     Map<String, dynamic> body = jsonDecode(this.body);
     if (body["errors"] != null) {
+      print(body["errors"]);
       DialogPrompt.showSnackbar(body["errors"].toString(), context);
     } else if (body["data"] != null) {
+      print(body["data"]);
       DialogPrompt.showSnackbar(body["data"].toString(), context);
     } else {
+      print(body.toString());
       throw body.toString();
     }
   }
