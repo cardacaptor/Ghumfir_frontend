@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
@@ -45,12 +46,15 @@ extension Handle on Response {
     Map<String, dynamic> body = jsonDecode(this.body);
     if (body["errors"] != null) {
       print(body["errors"]);
+      log(body["errors"]);
       DialogPrompt.showSnackbar(body["errors"].toString(), context);
     } else if (body["data"] != null) {
       print(body["data"]);
+      log(body["data"]);
       DialogPrompt.showSnackbar(body["data"].toString(), context);
     } else {
       print(body.toString());
+      log(body.toString());
       throw body.toString();
     }
   }

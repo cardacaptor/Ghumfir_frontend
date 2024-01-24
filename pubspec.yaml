@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts:
-  easy_search_bar:
   auto_size_text:
   http:
   shared_preferences:

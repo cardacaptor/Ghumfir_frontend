@@ -23,4 +23,18 @@ class RecommendationService {
     res.handleErrors(context);
     return null;
   }
+
+  Future<List<PostModel>?> searchFeed(int page, String search) async {
+    Response res = await get(
+      Uri.parse("${Api.baseUrl}feed/landing/$page/$search"),
+      headers: Api.header,
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      Map<String, dynamic> response = jsonDecode(res.body);
+      List<dynamic> data = response["data"];
+      List<PostModel> posts = data.map((e) => PostModel.fromJson(e)).toList();
+      return posts;
+    }
+    return null;
+  }
 }

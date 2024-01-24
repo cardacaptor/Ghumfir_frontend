@@ -44,4 +44,29 @@ class PostModel {
           .toList(),
     );
   }
+
+  PostModel copyWith({
+    int? id,
+    String? url,
+    String? caption,
+    int? numberOfLikes,
+    int? numberOfDislikes,
+    int? numberOfViews,
+    double? price,
+    int? duration,
+    List<PostTagsModel>? postTags,
+    List<PostActionModel>? postActions,
+  }) =>
+      PostModel(
+        id ?? this.id,
+        url ?? this.url,
+        caption ?? this.caption,
+        numberOfLikes ?? this.numberOfLikes,
+        numberOfDislikes ?? this.numberOfDislikes,
+        numberOfViews ?? this.numberOfViews,
+        price ?? this.price,
+        duration ?? this.duration,
+        postTags ?? this.postTags,
+        postActions ?? this.postActions,
+      );
 }

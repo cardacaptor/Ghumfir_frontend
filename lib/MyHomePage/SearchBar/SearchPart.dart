@@ -1,10 +1,11 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir_f/Management/SearchManagement.dart';
+import 'package:provider/provider.dart';
 
 import '../../Models/user_model.dart';
 
 class SearchPart extends StatelessWidget {
-  final Color secondaryYellow = Color(0xffFFE77A);
+  final Color secondaryYellow = const Color(0xffFFE77A);
   final List<UserModel> users = [];
   final bool isOpen;
 
@@ -32,21 +33,21 @@ class SearchPart extends StatelessWidget {
                   height: 59,
                 ),
           isOpen ? Container() : Expanded(child: Container()),
-          Container(
-            clipBehavior: Clip.hardEdge,
-            width: isOpen ? 900 : 844,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: EasySearchBar(
-              title: const Text("Explore your favorable travel destinations"),
-              onSearch: (String) {},
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.grey,
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                hintText: "Explore your favorable travel destinations",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+              controller: context.read<SearchManagement>().controller,
             ),
           ),
-          Expanded(child: Container()),
+          SizedBox(width: 20,),
           InkWell(
             onTap: () {
               _dialogBuilder(context);

@@ -48,7 +48,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                   child: Hero(
                     tag: "card-to-description${widget.item.id}",
                     child: Image.network(
-                      "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${widget.item.url}",
+                      "${Api.baseUrl}${widget.item.url}",
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                       height: MediaQuery.of(context).size.height,
@@ -115,7 +115,8 @@ class _RecommendationCardState extends State<RecommendationCard> {
                         disabled = true;
                         PostModel post = await LikeDislikeService()
                             .dislikePost(widget.item.id, context);
-                        widget.onUpdate(post);
+                        widget.onUpdate(post.copyWith());
+                        print(post.postActions);
                         disabled = false;
                       },
                       child: Icon(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/RecommendationCard.dart';
 import 'package:ghumfir_f/services/RecommendationService.dart';
+import 'package:provider/provider.dart';
+import '../../Management/SearchManagement.dart';
 import '../../Models/post_model.dart';
 
 class Recommenadation extends StatefulWidget {
@@ -25,9 +27,13 @@ class _RecommenadationState extends State<Recommenadation> {
     super.initState();
     controller.addListener(() async {
       if (controller.position.pixels >=
-              controller.position.maxScrollExtent - 100 &&
-          !disable &&
-          !limitReached) {
+          controller.position.maxScrollExtent - 100) {
+        print("$disable $limitReached");
+        if (disable ||
+            limitReached ||
+            context.read<SearchManagement>().searchResults == null) {
+          return;
+        }
         disable = true;
         page++;
         (List<PostModel>, int)? postSession = await RecommendationService()
@@ -73,25 +79,27 @@ class _RecommenadationState extends State<Recommenadation> {
                 controller: controller,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
-                children: posts!
-                    .asMap()
-                    .entries
-                    .map(
-                      (e) => Column(
-                        children: [
-                          RecommendationCard(
-                            e.value,
-                            (newPost) => setState(
-                              () => posts?[e.key] = newPost,
-                            ),
+                children:
+                    (context.watch<SearchManagement>().searchResults ?? posts)!
+                        .asMap()
+                        .entries
+                        .map(
+                          (e) => Column(
+                            children: [
+                              RecommendationCard(
+                                e.value,
+                                (newPost) => setState(() {
+                                  posts?[e.key] = newPost;
+                                  context.read<SearchManagement>().update(newPost);
+                                }),
+                              ),
+                              SizedBox(
+                                height: 42,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 42,
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
+                        )
+                        .toList(),
               );
             },
           ),

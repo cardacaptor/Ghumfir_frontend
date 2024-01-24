@@ -5,6 +5,7 @@ import 'package:ghumfir_f/MyHomePage/MyHomePage.dart';
 import 'package:ghumfir_f/MyHomePage/chat.dart';
 import 'package:provider/provider.dart';
 
+import 'Management/SearchManagement.dart';
 import 'api.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class WrapWithProvider extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SignInManagement()),
         ChangeNotifierProvider(create: (_) => SignUpManagement()),
+        ChangeNotifierProvider(create: (_) => SearchManagement()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
