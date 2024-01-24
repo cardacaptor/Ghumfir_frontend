@@ -21,8 +21,9 @@ class _RecommendationCardState extends State<RecommendationCard> {
 
   @override
   Widget build(BuildContext context) {
-    PostAction? myAction =
-        widget.item.postActions.firstWhereOrNull((e) => e.user.id == 1)?.action;
+    PostAction? myAction = widget.item.postActions
+        .firstWhereOrNull((e) => e.user.id == Api.user?.id)
+        ?.action;
     return Stack(
       children: [
         Container(
@@ -93,10 +94,10 @@ class _RecommendationCardState extends State<RecommendationCard> {
                       onTap: () async {
                         if (disabled) return;
                         disabled = true;
-                        PostModel post = await LikeDislikeService()
+                        PostModel? post = await LikeDislikeService()
                             .likePost(widget.item.id, context);
-                        widget.onUpdate(post);
                         disabled = false;
+                        if (post != null) widget.onUpdate(post);
                       },
                       child: Icon(
                         myAction == PostAction.LK
@@ -113,11 +114,10 @@ class _RecommendationCardState extends State<RecommendationCard> {
                       onTap: () async {
                         if (disabled) return;
                         disabled = true;
-                        PostModel post = await LikeDislikeService()
+                        PostModel? post = await LikeDislikeService()
                             .dislikePost(widget.item.id, context);
-                        widget.onUpdate(post.copyWith());
-                        print(post.postActions);
                         disabled = false;
+                        if (post != null) widget.onUpdate(post);
                       },
                       child: Icon(
                         myAction == PostAction.DL

@@ -4,6 +4,7 @@ import 'package:ghumfir_f/services/RecommendationService.dart';
 import 'package:provider/provider.dart';
 import '../../Management/SearchManagement.dart';
 import '../../Models/post_model.dart';
+import '../../api.dart';
 
 class Recommenadation extends StatefulWidget {
   const Recommenadation({Key? key}) : super(key: key);
@@ -22,13 +23,26 @@ class _RecommenadationState extends State<Recommenadation> {
   bool disable = false;
   bool limitReached = false;
 
+  reset() {
+    posts = null;
+    disable = false;
+    limitReached = false;
+    sessionId = 0;
+  }
+
   @override
   void initState() {
     super.initState();
+    Api.tokenListeners.add((String? prevToken, String? currToken) {
+      if ((prevToken == null && currToken != null) || (prevToken != null && currToken == null)) {
+        reset();
+        future = RecommendationService().fetchFeed(page, context);
+        setState(() {});
+      }
+    });
     controller.addListener(() async {
       if (controller.position.pixels >=
           controller.position.maxScrollExtent - 100) {
-        print("$disable $limitReached");
         if (disable ||
             limitReached ||
             context.read<SearchManagement>().searchResults == null) {
@@ -79,27 +93,27 @@ class _RecommenadationState extends State<Recommenadation> {
                 controller: controller,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
-                children:
-                    (context.watch<SearchManagement>().searchResults ?? posts)!
-                        .asMap()
-                        .entries
-                        .map(
-                          (e) => Column(
-                            children: [
-                              RecommendationCard(
-                                e.value,
-                                (newPost) => setState(() {
-                                  posts?[e.key] = newPost;
-                                  context.read<SearchManagement>().update(newPost);
-                                }),
-                              ),
-                              SizedBox(
-                                height: 42,
-                              ),
-                            ],
+                children: (context.watch<SearchManagement>().searchResults ??
+                        posts)!
+                    .asMap()
+                    .entries
+                    .map(
+                      (e) => Column(
+                        children: [
+                          RecommendationCard(
+                            e.value,
+                            (newPost) => setState(() {
+                              posts?[e.key] = newPost;
+                              context.read<SearchManagement>().update(newPost);
+                            }),
                           ),
-                        )
-                        .toList(),
+                          SizedBox(
+                            height: 42,
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
               );
             },
           ),

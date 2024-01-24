@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Components/DialogPrompt.dart';
+import 'Models/user_model.dart';
+import 'MyHomePage/SignInScreen.dart';
 
 class Api {
   static Future<SharedPreferences> prefs = SharedPreferences.getInstance();
@@ -19,6 +22,8 @@ class Api {
 
   static String? _token;
 
+  static UserModel? _user;
+
   static set token(String? value) {
     _token = value;
     if (value == null) return;
@@ -27,22 +32,45 @@ class Api {
 
   static String? get token => _token;
 
+  static UserModel? get user => _token == null ? null : _user;
+
+  static set user(UserModel? value) {
+    _user = value;
+  }
+
   static Future<String?> loadToken() async {
     _token = (await prefs).getString("token");
     return _token;
   }
 
   static Future<void> setToken(String? value) async {
+    for (var i in tokenListeners) {
+      i(_token, value);
+    }
+    print("_token $_token");
+    print("_value $value");
+    _token = value;
     if (value == null) {
       (await prefs).remove("token");
       return;
     }
     (await prefs).setString("token", value);
   }
+
+  static List<Function(String? prev, String? curr)> tokenListeners = [];
 }
 
 extension Handle on Response {
   handleErrors(BuildContext context) {
+    if (statusCode == 401) {
+      return showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          content: const SignInScreen(),
+          backgroundColor: Theme.of(context).colorScheme.background,
+        ),
+      );
+    }
     Map<String, dynamic> body = jsonDecode(this.body);
     if (body["errors"] != null) {
       print(body["errors"]);

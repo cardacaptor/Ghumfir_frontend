@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:ghumfir_f/Models/user_model.dart';
 import 'package:ghumfir_f/api.dart';
 import 'package:http/http.dart';
 
 class AuthService {
-  Future<String?> signIn(
+  Future<(String, UserModel)?> signIn(
     String username,
     String password,
     BuildContext context,
@@ -25,7 +26,7 @@ class AuthService {
 
       print('SignIn Successful');
       print('Token: $token');
-      return token;
+      return (token, UserModel.fromJson(responseData["data"]));
     } else {
       response.handleErrors(context);
       return null;
