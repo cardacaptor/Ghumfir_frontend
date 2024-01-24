@@ -7,7 +7,9 @@ import '../../api.dart';
 class RecommendationCard extends StatelessWidget {
   final PostModel item;
 
-  RecommendationCard(this.item,);
+  RecommendationCard(
+    this.item,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class RecommendationCard extends StatelessWidget {
               Hero(
                 tag: "card-to-description${item.id}",
                 child: Image.network(
-                  "${Api.baseUrl.substring(0,Api.baseUrl.length-1)}${item.url}",
+                  "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${item.url}",
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
                   height: 300,
