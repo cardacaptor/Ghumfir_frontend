@@ -35,7 +35,7 @@ class _RecommenadationState extends State<Recommenadation> {
     super.initState();
     Api.tokenListeners.add((String? prevToken, String? currToken) {
       if ((prevToken == null && currToken != null) ||
-          (prevToken != null && currToken == null)) {
+          (prevToken != null && currToken == null) && mounted) {
         reset();
         future = RecommendationService().fetchFeed(page, context);
         setState(() {});

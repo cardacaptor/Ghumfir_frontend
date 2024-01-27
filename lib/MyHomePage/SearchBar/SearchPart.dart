@@ -6,13 +6,26 @@ import '../../Models/user_model.dart';
 import '../../api.dart';
 import '../SignInScreen.dart';
 
-class SearchPart extends StatelessWidget {
-  final Color secondaryYellow = const Color(0xffFFE77A);
-  final List<UserModel> users = [];
+class SearchPart extends StatefulWidget {
   final Function refresh;
   final bool isOpen;
 
   SearchPart(this.isOpen, this.refresh);
+
+  @override
+  State<SearchPart> createState() => _SearchPartState();
+}
+
+class _SearchPartState extends State<SearchPart> {
+  final Color secondaryYellow = const Color(0xffFFE77A);
+
+  final List<UserModel> users = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Api.tokenListeners.add((prev, curr) => mounted ? setState(() {}) : 1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +41,14 @@ class SearchPart extends StatelessWidget {
       ),
       child: Row(
         children: [
-          isOpen
+          widget.isOpen
               ? Container()
               : Image.asset(
                   "assets/images/Logo.png",
                   width: 230,
                   height: 59,
                 ),
-          isOpen ? Container() : Expanded(child: Container()),
+          widget.isOpen ? Container() : Expanded(child: Container()),
           Expanded(
             child: TextField(
               decoration: InputDecoration(
@@ -55,35 +68,33 @@ class SearchPart extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
-              if(Api.token == null){
+              if (Api.token == null) {
                 return showDialog(
                   context: context,
                   builder: (_) => AlertDialog(
                     content: const SignInScreen(),
                     backgroundColor: Theme.of(context).colorScheme.background,
-                    
                   ),
                 );
               }
-              _dialogBuilder(context, refresh);
+              _dialogBuilder(context, widget.refresh);
             },
             child: Stack(
+              alignment: Alignment.center,
               children: [
                 Icon(
                   Icons.circle,
                   size: 40,
                   color: secondaryYellow,
                 ),
-                const Positioned(
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
-                  top: 0,
-                  child: Icon(
-                    Icons.person_2_outlined,
-                    size: 18,
-                  ),
-                ),
+                Api.user == null
+                    ? Icon(
+                        Icons.person_2_outlined,
+                        size: 18,
+                      )
+                    : Text(Api.user!.username[0].toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
               ],
             ),
           ),

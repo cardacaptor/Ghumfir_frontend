@@ -24,26 +24,28 @@ class Api {
 
   static UserModel? _user;
 
-  static set token(String? value) {
+  static settokenWithUser(String? value, {UserModel? user}) {
     _token = value;
     if (value == null) return;
-    setToken(value);
+    _user = user;
+    setToken(value, user: user);
   }
 
   static String? get token => _token;
 
   static UserModel? get user => _token == null ? null : _user;
 
-  static set user(UserModel? value) {
-    _user = value;
-  }
-
   static Future<String?> loadToken() async {
-    _token = (await prefs).getString("token");
+    String? token = (await prefs).getString("token");
+    String? userEncoded = (await prefs).getString("user");
+    if (userEncoded != null && token != null) {
+      _token = token;
+      _user = UserModel.fromJson(jsonDecode(userEncoded));
+    }
     return _token;
   }
 
-  static Future<void> setToken(String? value) async {
+  static Future<void> setToken(String? value, {UserModel? user}) async {
     for (var i in tokenListeners) {
       i(_token, value);
     }
@@ -52,9 +54,11 @@ class Api {
     _token = value;
     if (value == null) {
       (await prefs).remove("token");
+      (await prefs).remove("user");
       return;
     }
     (await prefs).setString("token", value);
+    (await prefs).setString("user", user.toString());
   }
 
   static List<Function(String? prev, String? curr)> tokenListeners = [];

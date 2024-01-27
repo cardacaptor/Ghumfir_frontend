@@ -122,6 +122,7 @@ class SignInScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
+                            Navigator.pop(context);
                             // context.read<UserManagement>().setindex(1, context);
                             showDialog(
                                 barrierColor: null,

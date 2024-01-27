@@ -53,6 +53,12 @@ class _RecommendationCardState extends State<RecommendationCard> {
                       width: double.infinity,
                       fit: BoxFit.fitWidth,
                       height: MediaQuery.of(context).size.height,
+                      errorBuilder: (context, obj, stackTrace) => Image.network(
+                        "${Api.baseUrl}${widget.item.url}",
+                        width: double.infinity,
+                        fit: BoxFit.fitWidth,
+                        height: MediaQuery.of(context).size.height,
+                      ),
                     ),
                   ),
                 );
@@ -70,7 +76,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                         Text(
                           widget.item.caption,
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 22,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.3),
                         ),
@@ -81,7 +87,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                           Text(
                             "NPR ${widget.item.price}",
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 14,
                               color: Color(0xff0394B6),
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.3,

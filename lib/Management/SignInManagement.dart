@@ -72,9 +72,8 @@ class SignInManagement with ChangeNotifier, DiagnosticableTreeMixin {
       NavigatorState navigator = Navigator.of(context);
       (String, UserModel)? token = await AuthService()
           .signIn(usernameController.text, passwordController.text, context);
-      if(token != null) {
-        Api.user = token.$2;
-        Api.token = token.$1;
+      if (token != null) {
+        Api.settokenWithUser(token.$1, user: token.$2);
         navigator.pop();
       }
     }

@@ -47,53 +47,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isOpen = false;
-  double minWidth = 200;
-  double maxDelta = 300;
+  double minWidth = 300;
+  double maxDelta = 500;
   double delta = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isOpen
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: MyHomePage(isOpen)),
-                MouseRegion(
-                  cursor: SystemMouseCursors.resizeColumn,
-                  child: GestureDetector(
-                    onHorizontalDragUpdate: (dg) => setState(() {
-                      delta -= dg.delta.dx;
-                      if (delta < 0) delta = 0;
-                      if (delta > maxDelta) delta = maxDelta;
-                    }),
-                    child: Container(
-                      width: 6,
-                      height: double.infinity,
-                      color:  Color(0xff2c5f2d),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isOpen = false;
-                    });
-                  },
-                  child: Icon(
-                    Icons.close,
-                    size: 30,
-                  ),
-                ),
-                SizedBox(
-                  width: minWidth + delta,
-                  child: ChatScreen(),
-                ),
-              ],
-            )
-          : Stack(
-              children: [
-                MyHomePage(isOpen),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              child: Stack(
+            children: [
+              MyHomePage(isOpen),
+              if (!isOpen)
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
@@ -123,8 +91,49 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
+            ],
+          )),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            width: isOpen ? (minWidth + delta + 36) : 0,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MouseRegion(
+                  cursor: SystemMouseCursors.resizeColumn,
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (dg) => setState(() {
+                      delta -= dg.delta.dx;
+                      if (delta < 0) delta = 0;
+                      if (delta > maxDelta) delta = maxDelta;
+                    }),
+                    child: Container(
+                      width: 6,
+                      height: double.infinity,
+                      color: Color(0xff2c5f2d),
+                    ),
+                  ),
+                ),
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: minWidth + delta,
+                      child: ChatScreen(),
+                    ),
+                    GestureDetector(
+                      onTap: () => setState(() => isOpen = false),
+                      child: Icon(
+                        Icons.close,
+                        size: 30,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
+          ),
+        ],
+      ),
     );
   }
 }

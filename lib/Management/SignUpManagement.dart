@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ghumfir_f/Components/DialogPrompt.dart';
+import 'package:ghumfir_f/Models/user_model.dart';
 
 import '../api.dart';
 import '../services/AuthService.dart';
@@ -182,7 +183,7 @@ class SignUpManagement with ChangeNotifier, DiagnosticableTreeMixin {
         DialogPrompt.showSnackbar("The password provided is too weak", context);
         return false;
       }
-      String? token = await AuthService().signUp(
+      (String, UserModel)? token = await AuthService().signUp(
         firstNameController.text,
         emailController.text,
         passwordController.text,
@@ -190,7 +191,7 @@ class SignUpManagement with ChangeNotifier, DiagnosticableTreeMixin {
       );
       if (token != null) {
         DialogPrompt.showSnackbar("Signed Up", context);
-        Api.token = token;
+        Api.settokenWithUser(token.$1, user: token.$2);
         navigator.pop();
       }
     }

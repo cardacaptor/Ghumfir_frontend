@@ -33,7 +33,7 @@ class AuthService {
     }
   }
 
-  Future<String?> signUp(
+  Future<(String, UserModel)?> signUp(
     String username,
     String email,
     String password,
@@ -53,7 +53,7 @@ class AuthService {
 
       if (token != null) {
         print("Sign-up successful! Token: $token");
-        return token;
+        return (token, UserModel.fromJson(responseData["data"]));
       } else {
         print("Sign-up failed: Token missing in the response");
         return null;

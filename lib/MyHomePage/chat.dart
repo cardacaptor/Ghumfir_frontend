@@ -29,10 +29,11 @@ class _ChatScreenState extends State<ChatScreen> {
         SizedBox(
           height: 10,
         ),
-        Image.asset(
-          "assets/images/Logo.png",
-          width: 230,
-          height: 59,
+        Center(
+          child: Image.asset(
+            "assets/images/Logo.png",
+            width: 230,
+          ),
         ),
         SizedBox(
           height: 10,
@@ -40,17 +41,17 @@ class _ChatScreenState extends State<ChatScreen> {
         Expanded(
           child: Api.token == null
               ? Center(
-                child: ElevatedButton(
-                    onPressed: () => showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            content: const SignInScreen(),
-                            backgroundColor:
-                                Theme.of(context).colorScheme.background,
+                  child: ElevatedButton(
+                      onPressed: () => showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              content: const SignInScreen(),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.background,
+                            ),
                           ),
-                        ),
-                    child: const Text("Login")),
-              )
+                      child: const Text("Login")),
+                )
               : FutureBuilder(
                   future: future,
                   builder: (context, snapshot) {
@@ -143,6 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    Api.tokenListeners.add((prev, curr) => mounted ? setState(() {}) : 1);
     controller.addListener(() async {
       if (controller.position.pixels >
               controller.position.maxScrollExtent - 100 &&
@@ -183,10 +185,16 @@ class MessageWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              message.message,
-              // style: const TextStyle(color: Colors.white),
+            Padding(
+              padding: message.posts.isEmpty
+                  ? EdgeInsets.zero
+                  : const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(
+                message.message,
+                style: const TextStyle(fontSize: 20),
+              ),
             ),
+            if (message.posts.isNotEmpty) SizedBox(height: 12),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -194,8 +202,9 @@ class MessageWidget extends StatelessWidget {
                     .map(
                       (e) => Builder(builder: (ctx) {
                         return Container(
-                          width: 300,
                           clipBehavior: Clip.hardEdge,
+                          width: 300,
+                          height: 300,
                           margin: EdgeInsets.symmetric(horizontal: 8.0),
                           padding: EdgeInsets.only(bottom: 12),
                           decoration: BoxDecoration(
@@ -205,12 +214,14 @@ class MessageWidget extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.network(
-                                ("${Api.baseUrl}${e.post.url}").replaceFirst(
-                                    RegExp(r'(?<=:\/\/[^\/]+)\/{2}'), '/'),
-                                height: 200,
-                                width: MediaQuery.of(ctx).size.width,
-                                fit: BoxFit.cover,
+                              Expanded(
+                                child: Image.network(
+                                  ("${Api.baseUrl}${e.post.url}").replaceFirst(
+                                      RegExp(r'(?<=:\/\/[^\/]+)\/{2}'), '/'),
+                                  height: 200,
+                                  width: 300,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8),
@@ -224,6 +235,7 @@ class MessageWidget extends StatelessWidget {
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700,
                                       ),
+                                      maxLines: 1,
                                     ),
                                     if (e.post.price != null)
                                       Column(
@@ -243,7 +255,7 @@ class MessageWidget extends StatelessWidget {
                                             "NPR ${e.post.price}",
                                             style: TextStyle(
                                               color: Colors.black54,
-                                              fontSize: 16,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
