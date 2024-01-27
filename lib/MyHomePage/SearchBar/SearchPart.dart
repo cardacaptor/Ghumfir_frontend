@@ -85,11 +85,8 @@ class _SearchPartState extends State<SearchPart> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Icon(
-                  Icons.circle,
-                  size: 40,
-                  color: secondaryYellow,
-                ),
+                Icon(Icons.circle,
+                    size: 40, color: Color.fromARGB(255, 146, 122, 16)),
                 Api.user == null
                     ? Icon(
                         Icons.person_2_outlined,

@@ -180,7 +180,8 @@ class _RecommendationCardState extends State<RecommendationCard> {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text("Kathmandu", style: TextStyle(color: Colors.white)),
+                  Text(getCapitalized(widget.item.location),
+                      style: TextStyle(color: Colors.white)),
                 ],
               ),
             ),
@@ -188,5 +189,13 @@ class _RecommendationCardState extends State<RecommendationCard> {
         ),
       ],
     );
+  }
+
+  String getCapitalized(String? location) {
+    if (location?.isEmpty ?? true) return "Nepal";
+    return location!
+        .split(" ")
+        .map((e) => e[0].toUpperCase() + e.substring(1))
+        .join(" ");
   }
 }

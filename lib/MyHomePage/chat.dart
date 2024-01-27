@@ -180,7 +180,7 @@ class MessageWidget extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
           color: !message.isFromBot
-              ? Color(0xffFFE77A)
+              ? Color.fromARGB(255, 146, 122, 16)
               : Colors.white.withOpacity(0.5),
           borderRadius: BorderRadius.circular(8.0),
         ),
