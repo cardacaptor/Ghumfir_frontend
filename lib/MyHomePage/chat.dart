@@ -38,34 +38,47 @@ class _ChatScreenState extends State<ChatScreen> {
           height: 10,
         ),
         Expanded(
-          child: FutureBuilder(
-              future: future,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  if (!snapshot.error.toString().contains("401")) {
-                    return Center(child: Text(snapshot.error.toString()));
-                  }
-                  return const Center(
-                    child: Text("Login to fetch previous messages"),
-                  );
-                }
-                if (!snapshot.hasData || snapshot.data == null) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                _messages = snapshot.data!;
-                return ListView.builder(
-                  controller: controller,
-                  reverse: true,
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                    final message = _messages[_messages.length - index - 1];
-                    return MessageWidget(
-                      message: message,
+          child: Api.token == null
+              ? Center(
+                child: ElevatedButton(
+                    onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            content: const SignInScreen(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
+                          ),
+                        ),
+                    child: const Text("Login")),
+              )
+              : FutureBuilder(
+                  future: future,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      if (!snapshot.error.toString().contains("401")) {
+                        return Center(child: Text(snapshot.error.toString()));
+                      }
+                      return const Center(
+                        child: Text("Login to fetch previous messages"),
+                      );
+                    }
+                    if (!snapshot.hasData || snapshot.data == null) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    _messages = snapshot.data!;
+                    return ListView.builder(
+                      controller: controller,
+                      reverse: true,
+                      padding: const EdgeInsets.all(8.0),
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        final message = _messages[_messages.length - index - 1];
+                        return MessageWidget(
+                          message: message,
+                        );
+                      },
                     );
-                  },
-                );
-              }),
+                  }),
         ),
         _buildMessageInput(context),
       ],

@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/Recommenadation.dart';
 import 'package:ghumfir_f/MyHomePage/SearchBar/SearchPart.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   final bool isOpen;
+
   MyHomePage(this.isOpen);
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -18,15 +24,15 @@ class MyHomePage extends StatelessWidget {
         ),
         Positioned.fill(
           child: Container(
-            color: Color(0x99ffffff), // Adjust color and opacity as needed
+            color: const Color(0x99ffffff), // Adjust color and opacity as needed
           ),
         ),
         ListView(
           children: [
             Column(
               children: [
-                SearchPart(isOpen),
-                Recommenadation(),
+                SearchPart(widget.isOpen, () => setState(() {})),
+                const Recommenadation(),
               ],
             ),
           ],

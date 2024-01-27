@@ -3,13 +3,16 @@ import 'package:ghumfir_f/Management/SearchManagement.dart';
 import 'package:provider/provider.dart';
 
 import '../../Models/user_model.dart';
+import '../../api.dart';
+import '../SignInScreen.dart';
 
 class SearchPart extends StatelessWidget {
   final Color secondaryYellow = const Color(0xffFFE77A);
   final List<UserModel> users = [];
+  final Function refresh;
   final bool isOpen;
 
-  SearchPart(this.isOpen);
+  SearchPart(this.isOpen, this.refresh);
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +50,21 @@ class SearchPart extends StatelessWidget {
               controller: context.read<SearchManagement>().controller,
             ),
           ),
-          SizedBox(width: 20,),
+          SizedBox(
+            width: 20,
+          ),
           InkWell(
-            onTap: () {
-              _dialogBuilder(context);
+            onTap: () async {
+              if(Api.token == null){
+                return showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    content: const SignInScreen(),
+                    backgroundColor: Theme.of(context).colorScheme.background,
+                  ),
+                );
+              }
+              _dialogBuilder(context, refresh);
             },
             child: Stack(
               children: [
@@ -77,24 +91,18 @@ class SearchPart extends StatelessWidget {
     );
   }
 
-  Future<dynamic> _dialogBuilder(BuildContext context) {
+  Future<dynamic> _dialogBuilder(BuildContext context, Function refresh) {
     return showDialog<dynamic>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: const Text(
-            'A dialog is a type of modal window that\n'
-            'appears in front of app content to\n'
-            'provide critical information, or prompt\n'
-            'for a decision to be made.',
-          ),
+          title: const Text('Do you want to logout'),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('Disable'),
+              child: const Text('No'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -103,9 +111,11 @@ class SearchPart extends StatelessWidget {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('Enable'),
-              onPressed: () {
-                Navigator.of(context).pop();
+              child: const Text('Yes'),
+              onPressed: () async {
+                await Api.setToken(null);
+                refresh();
+                Navigator.pop(context);
               },
             ),
           ],

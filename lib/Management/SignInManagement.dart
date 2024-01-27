@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ghumfir_f/Models/user_model.dart';
 
 import '../api.dart';
 import '../services/AuthService.dart';
@@ -69,10 +70,11 @@ class SignInManagement with ChangeNotifier, DiagnosticableTreeMixin {
     bool isValidated = validate();
     if (isValidated) {
       NavigatorState navigator = Navigator.of(context);
-      String? token = await AuthService()
+      (String, UserModel)? token = await AuthService()
           .signIn(usernameController.text, passwordController.text, context);
       if(token != null) {
-        Api.token = token;
+        Api.user = token.$2;
+        Api.token = token.$1;
         navigator.pop();
       }
     }
