@@ -95,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
               controller: _messageController,
               onSubmitted: (_) => _sendMessage(context),
               decoration: const InputDecoration(
-                hintText: 'Type a message...',
+                hintText: 'Text your personal assistant',
               ),
             ),
           ),

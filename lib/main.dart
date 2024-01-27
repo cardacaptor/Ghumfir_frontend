@@ -68,9 +68,9 @@ class _MyAppState extends State<MyApp> {
                       if (delta > maxDelta) delta = maxDelta;
                     }),
                     child: Container(
-                      width: 4,
+                      width: 6,
                       height: double.infinity,
-                      color: Colors.red,
+                      color:  Color(0xff2c5f2d),
                     ),
                   ),
                 ),

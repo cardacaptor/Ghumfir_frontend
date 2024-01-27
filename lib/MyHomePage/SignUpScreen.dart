@@ -187,7 +187,7 @@ class SignUpScreen extends StatelessWidget {
                                       onHover: (PointerEnterEvent event) {},
                                       child: Icon(
                                         Icons.info_outline,
-                                        color: Colors.white.withOpacity(0.5),
+                                        // color: Colors.white.withOpacity(0.5),
                                       ),
                                     ),
                                   )
@@ -200,7 +200,8 @@ class SignUpScreen extends StatelessWidget {
                               children: [
                                 Checkbox(
                                   value: watch.termsCheckBox,
-                                  activeColor: Colors.white.withOpacity(0.5),
+                                  activeColor:
+                                      Color(0xff2c5f2d).withOpacity(0.5),
                                   onChanged: (bool? status) {
                                     read.termsCheckBox =
                                         status ?? read.termsCheckBox;
@@ -212,21 +213,21 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   "I agree to all the ",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.green),
                                 ),
                                 Text(
                                   "Terms",
                                 ),
                                 Text(
                                   ", ",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.green),
                                 ),
                                 Text(
                                   "Privacy Policy ",
                                 ),
                                 Text(
                                   "and ",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.green),
                                 ),
                                 Text(
                                   "Fees",
@@ -243,11 +244,11 @@ class SignUpScreen extends StatelessWidget {
                                     .createAccount(context);
                               },
                               child: HoverContainer(
-                                hoverColor: Color(0xff0071FF),
+                                hoverColor: Color.fromARGB(255, 52, 112, 53),
                                 padding: EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 50),
                                 color: watch.createButtonEnabled
-                                    ? Color(0xff0071FF)
+                                    ? Color(0xff2c5f2d)
                                     : Colors.blueGrey,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -275,7 +276,7 @@ class SignUpScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Text("Already have an account? ",
-                                    style: TextStyle(color: Colors.white)),
+                                    style: TextStyle(color: Colors.black)),
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).pop();
@@ -285,8 +286,9 @@ class SignUpScreen extends StatelessWidget {
                                     hoverChild: Text(
                                       "Login",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.blue),
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 52, 112, 53),
+                                      ),
                                     ),
                                     child: Text(
                                       "Login",
