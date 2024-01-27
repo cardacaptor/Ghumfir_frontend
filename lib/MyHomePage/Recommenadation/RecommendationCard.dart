@@ -10,7 +10,7 @@ class RecommendationCard extends StatefulWidget {
   final PostModel item;
   final Function(PostModel post) onUpdate;
 
-  RecommendationCard(this.item, this.onUpdate);
+  const RecommendationCard(this.item, this.onUpdate);
 
   @override
   State<RecommendationCard> createState() => _RecommendationCardState();

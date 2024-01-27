@@ -63,6 +63,7 @@ class Api {
 extension Handle on Response {
   handleErrors(BuildContext context) {
     if (statusCode == 401) {
+      Api.setToken(null);
       return showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -75,6 +76,16 @@ extension Handle on Response {
     if (body["errors"] != null) {
       print(body["errors"]);
       log(body["errors"]);
+      if (body["errors"].toString().toLowerCase().contains("token")) {
+        Api.setToken(null);
+        return showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            content: const SignInScreen(),
+            backgroundColor: Theme.of(context).colorScheme.background,
+          ),
+        );
+      }
       DialogPrompt.showSnackbar(body["errors"].toString(), context);
     } else if (body["data"] != null) {
       print(body["data"]);

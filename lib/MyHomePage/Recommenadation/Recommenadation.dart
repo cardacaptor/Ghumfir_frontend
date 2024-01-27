@@ -34,7 +34,8 @@ class _RecommenadationState extends State<Recommenadation> {
   void initState() {
     super.initState();
     Api.tokenListeners.add((String? prevToken, String? currToken) {
-      if ((prevToken == null && currToken != null) || (prevToken != null && currToken == null)) {
+      if ((prevToken == null && currToken != null) ||
+          (prevToken != null && currToken == null)) {
         reset();
         future = RecommendationService().fetchFeed(page, context);
         setState(() {});
@@ -45,7 +46,7 @@ class _RecommenadationState extends State<Recommenadation> {
           controller.position.maxScrollExtent - 100) {
         if (disable ||
             limitReached ||
-            context.read<SearchManagement>().searchResults == null) {
+            context.read<SearchManagement>().searchResults != null) {
           return;
         }
         disable = true;
@@ -88,13 +89,14 @@ class _RecommenadationState extends State<Recommenadation> {
               }
               posts ??= snapshot.data?.$1;
               sessionId = snapshot.data?.$2 ?? 0;
+              SearchManagement read = context.watch<SearchManagement>();
+              SearchManagement watch = context.watch<SearchManagement>();
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 controller: controller,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
-                children: (context.watch<SearchManagement>().searchResults ??
-                        posts)!
+                children: (watch.searchResults ?? posts)!
                     .asMap()
                     .entries
                     .map(
@@ -102,9 +104,11 @@ class _RecommenadationState extends State<Recommenadation> {
                         children: [
                           RecommendationCard(
                             e.value,
-                            (newPost) => setState(() {
+                            (PostModel newPost) => setState(() {
+                              if (read.searchResults != null) {
+                                return read.update(newPost);
+                              }
                               posts?[e.key] = newPost;
-                              context.read<SearchManagement>().update(newPost);
                             }),
                           ),
                           SizedBox(

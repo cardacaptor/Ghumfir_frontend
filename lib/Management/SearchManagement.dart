@@ -7,11 +7,14 @@ class SearchManagement with ChangeNotifier {
   late TextEditingController controller = TextEditingController()
     ..addListener(() async {
       String searchText = controller.text.trim();
-      if (searchText.isNotEmpty) {
-        searchResults = await RecommendationService().searchFeed(1, searchText);
-        if (searchResults?.isEmpty ?? false) {
-          searchResults = null;
-        }
+      if (searchText.isEmpty) {
+        searchResults = null;
+        notifyListeners();
+        return;
+      }
+      searchResults = await RecommendationService().searchFeed(1, searchText);
+      if (searchResults?.isEmpty ?? false) {
+        searchResults = null;
       }
       notifyListeners();
     });
