@@ -68,9 +68,9 @@ class _MyAppState extends State<MyApp> {
                       if (delta > maxDelta) delta = maxDelta;
                     }),
                     child: Container(
-                      width: 4,
+                      width: 6,
                       height: double.infinity,
-                      color: Colors.red,
+                      color:  Color(0xff2c5f2d),
                     ),
                   ),
                 ),
@@ -97,19 +97,29 @@ class _MyAppState extends State<MyApp> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
-                    margin: const EdgeInsets.all(0),
                     width: 50,
                     height: 114,
-                    child: IconButton(
-                      icon: Icon(Icons.message),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xffFFE77A),
+                    child: Material(
+                      color: Color(0xffFFE77A),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        bottomLeft: Radius.circular(10.0),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          isOpen = !isOpen;
-                        });
-                      },
+                      child: InkWell(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          bottomLeft: Radius.circular(10.0),
+                        ),
+                        onTap: () => setState(() => isOpen = !isOpen),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.message,
+                            color: Colors.black,
+                          ),
+                          onPressed: () => setState(() => isOpen = !isOpen),
+                          color: Color(0xffFFE77A),
+                        ),
+                      ),
                     ),
                   ),
                 ),

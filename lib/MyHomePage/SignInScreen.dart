@@ -17,7 +17,7 @@ class SignInScreen extends StatelessWidget {
     return Container(
       width: 600,
       height: 550,
-      color: Theme.of(context).colorScheme.background,
+      // color: Theme.of(context).colorScheme.background,
       child: Center(
         child: Row(
           children: [
@@ -86,9 +86,9 @@ class SignInScreen extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                         color: watch.createButtonEnabled
-                            ? Color(0xff0071FF)
+                            ? Color(0xff2c5f2d)
                             : Colors.blueGrey,
-                        hoverColor: Color(0xff0071FF),
+                        hoverColor: Color.fromARGB(255, 52, 112, 53),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -114,8 +114,12 @@ class SignInScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text("Don't have an account? ",
-                            style: TextStyle(color: Colors.white)),
+                        Text(
+                          "Don't have an account? ",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         GestureDetector(
                           onTap: () {
                             // context.read<UserManagement>().setindex(1, context);
@@ -136,8 +140,9 @@ class SignInScreen extends StatelessWidget {
                             hoverChild: Text(
                               "Signup",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue),
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff2c5f2d),
+                              ),
                             ),
                             child: Text(
                               "Signup",

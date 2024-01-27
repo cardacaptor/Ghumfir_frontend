@@ -61,6 +61,7 @@ class SearchPart extends StatelessWidget {
                   builder: (_) => AlertDialog(
                     content: const SignInScreen(),
                     backgroundColor: Theme.of(context).colorScheme.background,
+                    
                   ),
                 );
               }
