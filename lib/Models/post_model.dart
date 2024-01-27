@@ -10,6 +10,7 @@ class PostModel {
   final int numberOfViews;
   final double? price;
   final int? duration;
+  final String? location;
   final List<PostTagsModel> postTags;
   final List<PostActionModel> postActions;
 
@@ -24,25 +25,26 @@ class PostModel {
     this.duration,
     this.postTags,
     this.postActions,
+    this.location,
   );
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      json["id"],
-      json["url"],
-      json["caption"],
-      json["number_of_likes"],
-      json["number_of_dislikes"],
-      json["number_of_views"],
-      json["price"] == null ? null : json["price"] + 0.0,
-      json["duration"],
-      (json["post_tags"] as List<dynamic>)
-          .map((e) => PostTagsModel.fromJson(e))
-          .toList(),
-      (json["actions"] as List<dynamic>)
-          .map((e) => PostActionModel.fromJson(e))
-          .toList(),
-    );
+        json["id"],
+        json["url"],
+        json["caption"],
+        json["number_of_likes"],
+        json["number_of_dislikes"],
+        json["number_of_views"],
+        json["price"] == null ? null : json["price"] + 0.0,
+        json["duration"],
+        (json["post_tags"] as List<dynamic>)
+            .map((e) => PostTagsModel.fromJson(e))
+            .toList(),
+        (json["actions"] as List<dynamic>)
+            .map((e) => PostActionModel.fromJson(e))
+            .toList(),
+        json["category"]?["caption"]);
   }
 
   PostModel copyWith({
@@ -56,6 +58,7 @@ class PostModel {
     int? duration,
     List<PostTagsModel>? postTags,
     List<PostActionModel>? postActions,
+    String? location,
   }) =>
       PostModel(
         id ?? this.id,
@@ -68,5 +71,6 @@ class PostModel {
         duration ?? this.duration,
         postTags ?? this.postTags,
         postActions ?? this.postActions,
+        location ?? this.location,
       );
 }

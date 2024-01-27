@@ -62,6 +62,7 @@ class PersonalTextField extends StatelessWidget {
                     onChanged!(input);
                   }
                 },
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: prefix,
                   isDense: isDense,
@@ -85,6 +86,7 @@ class PersonalTextField extends StatelessWidget {
                     onChanged!(input);
                   }
                 },
+                style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: hintText,
                   prefixIcon: prefix,

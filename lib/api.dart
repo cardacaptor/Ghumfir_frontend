@@ -72,7 +72,7 @@ extension Handle on Response {
         context: context,
         builder: (_) => AlertDialog(
           content: const SignInScreen(),
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Color.fromARGB(255, 34, 33, 33),
         ),
       );
     }
@@ -86,7 +86,7 @@ extension Handle on Response {
           context: context,
           builder: (_) => AlertDialog(
             content: const SignInScreen(),
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Color.fromARGB(255, 34, 33, 33),
           ),
         );
       }

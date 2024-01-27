@@ -52,14 +52,17 @@ class _SearchPartState extends State<SearchPart> {
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search, color: Colors.white),
                 hintText: "Explore your favorable travel destinations",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
+                hintStyle: TextStyle(color: Colors.white),
                 filled: true,
-                fillColor: Colors.white,
+                iconColor: Colors.white,
+                fillColor: Color.fromARGB(255, 34, 33, 33),
               ),
+              style: TextStyle(color: Colors.white),
               controller: context.read<SearchManagement>().controller,
             ),
           ),
@@ -73,7 +76,7 @@ class _SearchPartState extends State<SearchPart> {
                   context: context,
                   builder: (_) => AlertDialog(
                     content: const SignInScreen(),
-                    backgroundColor: Theme.of(context).colorScheme.background,
+                    backgroundColor: Color.fromARGB(255, 34, 33, 33),
                   ),
                 );
               }

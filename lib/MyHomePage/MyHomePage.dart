@@ -24,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         Positioned.fill(
           child: Container(
-            color: const Color(0x99ffffff), // Adjust color and opacity as needed
+            color: Colors.black.withOpacity(0.7),
           ),
         ),
         ListView(

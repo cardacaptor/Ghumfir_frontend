@@ -24,89 +24,89 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: Image.asset(
-            "assets/images/Logo.png",
-            width: 230,
+    return Container(
+      color: Color.fromARGB(255, 34, 33, 33),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: Api.token == null
-              ? Center(
-                  child: ElevatedButton(
-                      onPressed: () => showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                              content: const SignInScreen(),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.background,
+          Center(
+            child: Image.asset(
+              "assets/images/Logo.png",
+              width: 230,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Api.token == null
+                ? Center(
+                    child: ElevatedButton(
+                        onPressed: () => showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                content: const SignInScreen(),
+                                backgroundColor:
+                                    Color.fromARGB(255, 34, 33, 33),
+                              ),
                             ),
-                          ),
-                      child: const Text("Login")),
-                )
-              : FutureBuilder(
-                  future: future,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      if (!snapshot.error.toString().contains("401")) {
-                        return Center(child: Text(snapshot.error.toString()));
-                      }
-                      return const Center(
-                        child: Text("Login to fetch previous messages"),
-                      );
-                    }
-                    if (!snapshot.hasData || snapshot.data == null) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    _messages = snapshot.data!;
-                    return ListView.builder(
-                      controller: controller,
-                      reverse: true,
-                      padding: const EdgeInsets.all(8.0),
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                        final message = _messages[_messages.length - index - 1];
-                        return MessageWidget(
-                          message: message,
+                        child: const Text("Login")),
+                  )
+                : FutureBuilder(
+                    future: future,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        if (!snapshot.error.toString().contains("401")) {
+                          return Center(child: Text(snapshot.error.toString()));
+                        }
+                        return const Center(
+                          child: Text("Login to fetch previous messages"),
                         );
-                      },
-                    );
-                  }),
-        ),
-        _buildMessageInput(context),
-      ],
+                      }
+                      if (!snapshot.hasData || snapshot.data == null) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      _messages = snapshot.data!;
+                      return ListView.builder(
+                        controller: controller,
+                        reverse: true,
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: _messages.length,
+                        itemBuilder: (context, index) {
+                          final message =
+                              _messages[_messages.length - index - 1];
+                          return MessageWidget(
+                            message: message,
+                          );
+                        },
+                      );
+                    }),
+          ),
+          _buildMessageInput(context),
+        ],
+      ),
     );
   }
 
   Widget _buildMessageInput(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _messageController,
-              onSubmitted: (_) => _sendMessage(context),
-              decoration: const InputDecoration(
-                hintText: 'Text your personal assistant',
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.send),
+      child: TextField(
+        style: TextStyle(color: Colors.white),
+        controller: _messageController,
+        onSubmitted: (_) => _sendMessage(context),
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.send, color: Colors.white),
             onPressed: () {
               _sendMessage(context);
             },
           ),
-        ],
+          hintText: 'Text your personal assistant',
+          hintStyle: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
@@ -129,7 +129,7 @@ class _ChatScreenState extends State<ChatScreen> {
             context: context,
             builder: (_) => AlertDialog(
               content: SignInScreen(),
-              backgroundColor: Theme.of(context).colorScheme.background,
+              backgroundColor: Color.fromARGB(255, 34, 33, 33),
             ),
           );
           setState(() {
@@ -179,7 +179,9 @@ class MessageWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: !message.isFromBot ? Color(0xffFFE77A) : Colors.black12,
+          color: !message.isFromBot
+              ? Color(0xffFFE77A)
+              : Colors.white.withOpacity(0.5),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(

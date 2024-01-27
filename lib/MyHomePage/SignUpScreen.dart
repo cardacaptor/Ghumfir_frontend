@@ -29,7 +29,10 @@ class SignUpScreen extends StatelessWidget {
                       children: [
                         Text(
                           "Register Now",
-                          style: Theme.of(context).textTheme.displaySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(color: Colors.white),
                         ),
                         SizedBox(
                           height: 20,
@@ -38,7 +41,8 @@ class SignUpScreen extends StatelessWidget {
                           "And unlock chat with our intelligent bot and streamline your experience effortlessly",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!
+                              .bodyMedium
+                              ?.copyWith(color: Colors.white)
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -187,7 +191,7 @@ class SignUpScreen extends StatelessWidget {
                                       onHover: (PointerEnterEvent event) {},
                                       child: Icon(
                                         Icons.info_outline,
-                                        // color: Colors.white.withOpacity(0.5),
+                                        color: Colors.white.withOpacity(0.5),
                                       ),
                                     ),
                                   )
@@ -276,7 +280,7 @@ class SignUpScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Text("Already have an account? ",
-                                    style: TextStyle(color: Colors.black)),
+                                    style: TextStyle(color: Colors.white)),
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).pop();

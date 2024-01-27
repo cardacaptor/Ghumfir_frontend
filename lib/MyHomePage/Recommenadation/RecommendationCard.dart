@@ -29,7 +29,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
         Container(
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color.fromARGB(255, 34, 33, 33),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -76,6 +76,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                         Text(
                           widget.item.caption,
                           style: TextStyle(
+                              color: Colors.white,
                               fontSize: 22,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.3),
@@ -88,7 +89,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                             "NPR ${widget.item.price}",
                             style: TextStyle(
                               fontSize: 14,
-                              color: Color(0xff0394B6),
+                              color: Colors.white.withOpacity(0.5),
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.3,
                             ),
@@ -147,7 +148,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
             margin: EdgeInsets.all(12),
             height: 40,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Color.fromARGB(255, 34, 33, 33),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -169,7 +170,8 @@ class _RecommendationCardState extends State<RecommendationCard> {
                   const SizedBox(
                     width: 8,
                   ),
-                  const Text("5 days"),
+                  Text("${(widget.item.duration ?? 1).toString()} Days",
+                      style: TextStyle(color: Colors.white)),
                   Expanded(child: Container()),
                   const Icon(
                     Icons.location_pin,
@@ -178,7 +180,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                   const SizedBox(
                     width: 8,
                   ),
-                  const Text("Kathmandu"),
+                  Text("Kathmandu", style: TextStyle(color: Colors.white)),
                 ],
               ),
             ),

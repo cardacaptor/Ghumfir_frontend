@@ -28,7 +28,10 @@ class SignInScreen extends StatelessWidget {
               children: [
                 Text(
                   "Sign In",
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall
+                      ?.copyWith(color: Colors.white),
                 ),
                 SizedBox(
                   height: 20,
@@ -37,7 +40,8 @@ class SignInScreen extends StatelessWidget {
                   "And unlock chat with our intelligent bot and streamline your experience effortlessly",
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMedium!
+                      .bodyMedium
+                      ?.copyWith(color: Colors.white)
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -117,7 +121,7 @@ class SignInScreen extends StatelessWidget {
                         Text(
                           "Don't have an account? ",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                         GestureDetector(
@@ -130,9 +134,8 @@ class SignInScreen extends StatelessWidget {
                                 builder: (_) {
                                   return AlertDialog(
                                     content: SignUpScreen(),
-                                    backgroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .background,
+                                    backgroundColor:
+                                        Color.fromARGB(255, 34, 33, 33),
                                   );
                                 });
                           },

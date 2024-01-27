@@ -28,7 +28,10 @@ class WrapWithProvider extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Ghumfir',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
+          textTheme: TextTheme(
+            bodyMedium: TextStyle(color: Colors.white),
+          ),
         ),
         home: Builder(builder: (context) {
           return const MyApp();
@@ -94,8 +97,9 @@ class _MyAppState extends State<MyApp> {
             ],
           )),
           AnimatedContainer(
+            color: Color.fromARGB(255, 34, 33, 33),
             duration: Duration(milliseconds: 200),
-            width: isOpen ? (minWidth + delta + 36) : 0,
+            width: isOpen ? (minWidth + delta + 6) : 0,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -125,6 +129,7 @@ class _MyAppState extends State<MyApp> {
                       child: Icon(
                         Icons.close,
                         size: 30,
+                        color: Colors.white,
                       ),
                     ),
                   ],
