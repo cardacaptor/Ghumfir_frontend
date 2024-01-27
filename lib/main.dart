@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
           AnimatedContainer(
             color: Color.fromARGB(255, 34, 33, 33),
             duration: Duration(milliseconds: 200),
-            width: isOpen ? (minWidth + delta + 6) : 0,
+            width: isOpen ? (minWidth + delta) : 0,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -118,21 +118,20 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
-                Stack(
-                  children: [
-                    SizedBox(
-                      width: minWidth + delta,
-                      child: ChatScreen(),
-                    ),
-                    GestureDetector(
-                      onTap: () => setState(() => isOpen = false),
-                      child: Icon(
-                        Icons.close,
-                        size: 30,
-                        color: Colors.white,
+                Expanded(
+                  child: Stack(
+                    children: [
+                      ChatScreen(),
+                      GestureDetector(
+                        onTap: () => setState(() => isOpen = false),
+                        child: Icon(
+                          Icons.close,
+                          size: 30,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
