@@ -181,7 +181,7 @@ class MessageWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: !message.isFromBot
               ? Color.fromARGB(255, 146, 122, 16)
-              : Colors.white.withOpacity(0.5),
+              : Colors.white.withOpacity(0.1),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
