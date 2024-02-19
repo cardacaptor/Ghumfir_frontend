@@ -50,6 +50,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isOpen = false;
+  bool hoveringHere = false;
   double minWidth = 300;
   double maxDelta = 500;
   double delta = 0;
@@ -99,22 +100,27 @@ class _MyAppState extends State<MyApp> {
           AnimatedContainer(
             color: Color.fromARGB(255, 34, 33, 33),
             duration: Duration(milliseconds: 200),
-            width: isOpen ? (minWidth + delta) : 0,
+            width: isOpen ? (minWidth + delta + (hoveringHere ? 8 : 0)) : 0,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MouseRegion(
                   cursor: SystemMouseCursors.resizeColumn,
+                  onEnter: (_) => setState(() => hoveringHere = true),
+                  onExit: (_) => setState(() => hoveringHere = false),
                   child: GestureDetector(
                     onHorizontalDragUpdate: (dg) => setState(() {
                       delta -= dg.delta.dx;
                       if (delta < 0) delta = 0;
                       if (delta > maxDelta) delta = maxDelta;
                     }),
-                    child: Container(
-                      width: 6,
+                    child: AnimatedContainer(
+                      width: hoveringHere ? 12 : 4,
                       height: double.infinity,
-                      color: Color(0xff2c5f2d),
+                      color: hoveringHere
+                          ? Color(0xff2c5f2d)
+                          : Color(0xff2c5f2d).withOpacity(0.5),
+                      duration: Duration(milliseconds: 200),
                     ),
                   ),
                 ),

@@ -95,7 +95,7 @@ class _RecommenadationState extends State<Recommenadation> {
                 physics: const BouncingScrollPhysics(),
                 controller: controller,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 children: (watch.searchResults ?? posts)!
                     .asMap()
                     .entries

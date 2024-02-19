@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/Recommenadation.dart';
 import 'package:ghumfir_f/MyHomePage/SearchBar/SearchPart.dart';
@@ -16,15 +18,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          'assets/images/image_1.png',
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(
+            sigmaX: 8,
+            sigmaY: 8,
+          ),
+          child: Image.asset(
+            'assets/images/image_1.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
         ),
         Positioned.fill(
           child: Container(
-            color: Colors.black.withOpacity(0.7),
+            color: Colors.black.withOpacity(0.8),
           ),
         ),
         ListView(
@@ -32,7 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
               children: [
                 SearchPart(widget.isOpen, () => setState(() {})),
-                const Recommenadation(),
+                Container(
+                  constraints: const BoxConstraints(maxWidth: 1200),
+                  child: const Recommenadation(),
+                ),
               ],
             ),
           ],
