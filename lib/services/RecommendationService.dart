@@ -9,6 +9,7 @@ import '../api.dart';
 class RecommendationService {
   Future<(List<PostModel>, int)?> fetchFeed(int page, BuildContext context,
       {int sessionId = 0}) async {
+    page = 1;
     Response res = await get(
       Uri.parse("${Api.baseUrl}feed/landing/$page/session/$sessionId"),
       headers: Api.header,
