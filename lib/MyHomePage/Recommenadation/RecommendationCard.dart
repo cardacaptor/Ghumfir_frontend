@@ -10,7 +10,7 @@ class RecommendationCard extends StatefulWidget {
   final PostModel item;
   final Function(PostModel post) onUpdate;
 
-  const RecommendationCard(this.item, this.onUpdate);
+  const RecommendationCard(this.item, this.onUpdate, {super.key});
 
   @override
   State<RecommendationCard> createState() => _RecommendationCardState();
@@ -38,15 +38,19 @@ class _RecommendationCardState extends State<RecommendationCard> {
             Builder(builder: (ctx) {
               return Hero(
                 tag: "card-to-description${widget.item.id}",
-                child: Image.network(
-                  "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${widget.item.url}",
+                child: Container(
                   width: double.infinity,
-                  height: constraints.maxWidth * 0.5,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, obj, stackTrace) => Image.network(
-                    "${Api.baseUrl}${widget.item.url}",
-                    width: double.infinity,
+                  constraints: BoxConstraints(
+                      maxHeight: constraints.maxWidth * 0.4,
+                      minHeight: constraints.maxWidth * 0.2),
+                  child: Image.network(
+                    "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${widget.item.url}",
                     fit: BoxFit.cover,
+                    errorBuilder: (context, obj, stackTrace) => Image.network(
+                      "${Api.baseUrl}${widget.item.url}",
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               );
