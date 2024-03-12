@@ -43,15 +43,18 @@ class _RecommendationCardState extends State<RecommendationCard> {
                   constraints: BoxConstraints(
                       maxHeight: constraints.maxWidth * 0.4,
                       minHeight: constraints.maxWidth * 0.2),
-                  child: Image.network(
-                    "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${widget.item.url}",
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, obj, stackTrace) => Image.network(
-                      "${Api.baseUrl}${widget.item.url}",
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: widget.item.url == null
+                      ? Center(child: CircularProgressIndicator())
+                      : Image.network(
+                          "${Api.baseUrl.substring(0, Api.baseUrl.length - 1)}${widget.item.url}",
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, obj, stackTrace) =>
+                              Image.network(
+                            "${Api.baseUrl}${widget.item.url}",
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
               );
             }),
@@ -70,7 +73,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.item.caption,
+                              widget.item.name ?? "Unknown",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,

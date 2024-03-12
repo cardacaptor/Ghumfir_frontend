@@ -217,13 +217,18 @@ class MessageWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Image.network(
-                                  ("${Api.baseUrl}${e.post.url}").replaceFirst(
-                                      RegExp(r'(?<=:\/\/[^\/]+)\/{2}'), '/'),
-                                  height: 200,
-                                  width: 300,
-                                  fit: BoxFit.cover,
-                                ),
+                                child: e.post.url == null
+                                    ? const Center(child: CircularProgressIndicator())
+                                    : Image.network(
+                                        ("${Api.baseUrl}${e.post.url}")
+                                            .replaceFirst(
+                                                RegExp(
+                                                    r'(?<=:\/\/[^\/]+)\/{2}'),
+                                                '/'),
+                                        height: 200,
+                                        width: 300,
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(8),
@@ -231,7 +236,7 @@ class MessageWidget extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      e.post.caption,
+                                      e.post.name ?? "Unknown",
                                       style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 16,

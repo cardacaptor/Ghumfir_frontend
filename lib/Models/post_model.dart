@@ -3,8 +3,8 @@ import 'package:ghumfir_f/Models/post_tags_model.dart';
 
 class PostModel {
   final int id;
-  final String url;
-  final String caption;
+  final String? url;
+  final String? name;
   final int numberOfLikes;
   final int numberOfDislikes;
   final int numberOfViews;
@@ -17,7 +17,7 @@ class PostModel {
   PostModel(
     this.id,
     this.url,
-    this.caption,
+    this.name,
     this.numberOfLikes,
     this.numberOfDislikes,
     this.numberOfViews,
@@ -32,7 +32,7 @@ class PostModel {
     return PostModel(
         json["id"],
         json["url"],
-        json["caption"],
+        json["name"],
         json["number_of_likes"],
         json["number_of_dislikes"],
         json["number_of_views"],
@@ -63,7 +63,7 @@ class PostModel {
       PostModel(
         id ?? this.id,
         url ?? this.url,
-        caption ?? this.caption,
+        caption ?? this.name,
         numberOfLikes ?? this.numberOfLikes,
         numberOfDislikes ?? this.numberOfDislikes,
         numberOfViews ?? this.numberOfViews,
