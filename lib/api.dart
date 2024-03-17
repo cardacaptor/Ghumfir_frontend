@@ -67,7 +67,7 @@ class Api {
 extension Handle on Response {
   handleErrors(BuildContext context) {
     if (statusCode == 401) {
-      Api.setToken(null);
+      Api.settokenWithUser(null, user: null);
       return showDialog(
         context: context,
         builder: (_) => AlertDialog(

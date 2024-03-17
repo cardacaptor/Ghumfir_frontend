@@ -21,6 +21,7 @@ class _RecommendationCardState extends State<RecommendationCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.item.url);
     PostAction? myAction = widget.item.postActions
         .firstWhereOrNull((e) => e.user.id == Api.user?.id)
         ?.action;

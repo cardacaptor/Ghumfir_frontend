@@ -144,7 +144,10 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    Api.tokenListeners.add((prev, curr) => mounted ? setState(() {}) : 1);
+    Api.tokenListeners.add((prev, curr) {
+      mounted ? future = ChatService().getChats(1, context) : 1;
+      setState(() {});
+    });
     controller.addListener(() async {
       if (controller.position.pixels >
               controller.position.maxScrollExtent - 100 &&
@@ -218,7 +221,8 @@ class MessageWidget extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: e.post.url == null
-                                    ? const Center(child: CircularProgressIndicator())
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
                                     : Image.network(
                                         ("${Api.baseUrl}${e.post.url}")
                                             .replaceFirst(
