@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ghumfir_f/MyHomePage/Recommenadation/RecommendationCard.dart';
 import 'package:ghumfir_f/services/RecommendationService.dart';
 import 'package:provider/provider.dart';
-import '../../Management/SearchManagement.dart';
-import '../../Models/post_model.dart';
-import '../../api.dart';
+import '../../../Management/SearchManagement.dart';
+import '../../../Models/post_model.dart';
+import '../../../api.dart';
 
 class Recommenadation extends StatefulWidget {
   const Recommenadation({Key? key}) : super(key: key);
@@ -94,8 +94,8 @@ class _RecommenadationState extends State<Recommenadation> {
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 controller: controller,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20, vertical: 20),
                 children: (watch.searchResults ?? posts)!
                     .asMap()
                     .entries

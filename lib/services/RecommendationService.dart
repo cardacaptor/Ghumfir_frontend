@@ -24,6 +24,38 @@ class RecommendationService {
     res.handleErrors(context);
     return null;
   }
+  Future<(List<PostModel>, int)?> fetchExplore(int page, BuildContext context,
+      {int sessionId = 0}) async {
+    page = 1;
+    Response res = await get(
+      Uri.parse("${Api.baseUrl}feed/landing/explore/$page/session/$sessionId"),
+      headers: Api.header,
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      Map<String, dynamic> response = jsonDecode(res.body);
+      List<dynamic> data = response["data"];
+      List<PostModel> posts = data.map((e) => PostModel.fromJson(e)).toList();
+      int sessionId = int.tryParse(response["session_id"].toString()) ?? 0;
+      return (posts, sessionId);
+    }
+    res.handleErrors(context);
+    return null;
+  }
+
+  Future<List<PostModel>?> fetchTrending(int page, BuildContext context) async {
+    Response res = await get(
+      Uri.parse("${Api.baseUrl}feed/landing/trending/$page"),
+      headers: Api.header,
+    );
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      Map<String, dynamic> response = jsonDecode(res.body);
+      List<dynamic> data = response["data"];
+      List<PostModel> posts = data.map((e) => PostModel.fromJson(e)).toList();
+      return posts;
+    }
+    res.handleErrors(context);
+    return null;
+  }
 
   Future<List<PostModel>?> searchFeed(int page, String search) async {
     Response res = await get(

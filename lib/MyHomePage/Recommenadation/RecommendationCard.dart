@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ghumfir_f/Models/post_action_model.dart';
 import 'package:ghumfir_f/Models/post_model.dart';
-import 'package:ghumfir_f/MyHomePage/Recommenadation/DescriptionDetail.dart';
 import 'package:ghumfir_f/services/LikeDislikeService.dart';
 import 'package:collection/collection.dart';
 import '../../api.dart';
