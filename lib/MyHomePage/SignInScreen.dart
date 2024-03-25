@@ -7,8 +7,19 @@ import 'package:provider/provider.dart';
 import '../Components/TextField.dart';
 import '../Management/SignInManagement.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<SignInManagement>().clearState();
+  }
 
   @override
   Widget build(BuildContext context) {
