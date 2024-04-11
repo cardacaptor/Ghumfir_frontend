@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ghumfir_f/MyHomePage/SignInScreen.dart';
 import 'package:hovering/hovering.dart';
 import 'package:provider/provider.dart';
 import '../Components/TextField.dart';
@@ -283,7 +284,17 @@ class SignUpScreen extends StatelessWidget {
                                     style: TextStyle(color: Colors.white)),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pop();
+                                    Navigator.pop(context);
+                                    showDialog(
+                                        barrierColor: null,
+                                        context: context,
+                                        builder: (_) {
+                                          return AlertDialog(
+                                            content: SignInScreen(),
+                                            backgroundColor:
+                                                Color.fromARGB(255, 34, 33, 33),
+                                          );
+                                        });
                                   },
                                   child: HoverWidget(
                                     onHover: (PointerEnterEvent event) {},
